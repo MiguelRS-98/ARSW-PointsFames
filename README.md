@@ -33,10 +33,10 @@ Este programa se encarga de administrar la operación del juego de picas & famas
 
 ## Test
 ![Test App](Images/Test0.PNG)<br>
-> - 2 pruebas tes y la ejecución de antes y despues de la aplicación.
+> - 2 pruebas test y la ejecución de antes y despues de la aplicación.
 
 ## JavaDoc:
-[JavaDoc - Datagram - HTTP Server](JavaDoc/index.html)
+[JavaDoc - HerokuApp](JavaDoc/index.html)
 
 ## Tiempo de Lineas LOC
 - ___Main:___<br>
