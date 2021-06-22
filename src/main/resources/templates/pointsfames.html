@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Points & Fames</title>
+        <style type="text/css">
+            body {background-color:rgba(14,11,22,1); font-family:Arial,Helvetica,sans-serif;}
+            .title {color:rgba(255,255,255,1); background-color:rgba(71,23,246,1);border-radius:20px; text-align:center;}
+            .subTitle {color:rgba(162,57,202,1); text-align:center;}
+            .sub0 {color:rgba(162,57,202,1);}
+            .sub2 {color:rgba(255,255,255,1); background-color:rgba(71,23,246,1); width:620px; margin:0 auto; border-top-left-radius:40px; border-top-right-radius:40px;}
+            .numberSelect {color:rgba(255,255,255,1); font-size:40px; text-align:center;}
+            .blockInput {text-align: center;}
+            .sub1 {color:rgba(255,255,255,1);}
+            .inputUser {background-color:rgba(255,255,255,1); border-radius:20px; font-size:16px; font-weight:bold; text-align:center;}
+            .inputButton {background-color:white; width:100px; border-radius:20px; font-weight:bold;}
+            .reset {color:rgba(255,255,255,1);}
+            .history {background-color:rgba(255,255,255,1); padding:10px; display:flex; width:600px; height:200px; overflow-x:hidden; overflow-y:auto; text-align:center; border-bottom-left-radius:40px; margin:0 auto;}
+            .optionHistory {margin-right:120px; margin-top:-5px; margin-bottom:20px; text-align:center;}
+        </style>
+        <script>
+            let points = 0, fames = 0, contHistory = 0;
+            let historyAttempts = "", historyPredictions = "", historyPoints = "", historyFames = "";
+            let numberRandom = setNumber();
+            function setNumber () {
+                let number1 = Math.floor(Math.random()*9) + "";
+                let number2 = Math.floor(Math.random()*9) + "";
+                let number3 = Math.floor(Math.random()*9) + "";
+                let number4 = Math.floor(Math.random()*9) + "";
+                return number1 + number2 + number3 + number4;
+            }
+            function getNumberUser (){
+                let numberUser = document.getElementsByName("number")[0].value;
+                contHistory +=1;
+                let numberUser1 = numberUser[0] + "";
+                let numberUser2 = numberUser[1] + "";
+                let numberUser3 = numberUser[2] + "";
+                let numberUser4 = numberUser[3] + "";
+                numberUser = numberUser1 + numberUser2 + numberUser3 + numberUser4;
+                checkInput(numberUser);
+            }
+            function checkInput (x) {
+                if (x.length < 4) {
+                    alert('El numero debe contener 4 digitos.');
+                } else if (isNaN(x) === true) {
+                    alert('La entrada deben ser numeros.');
+                } else {
+                    numberEquals(x);
+                }
+            }
+            function numberEquals (x) {
+                if (x === numberRandom) {
+                    document.getElementById('numberUnlock'.toString()).innerHTML = numberRandom;
+                    alert('Ganaste el numero es: ' + numberRandom);
+                } else {
+                    getPoints(x);
+                }
+            }
+            function getPoints (x) {
+                points = 0;
+                fames = 0;
+                for (let i=0; i<4; i++) {
+                    if (numberRandom.includes(x[i])) {
+                        if (x[i] === numberRandom[i]) {
+                            points +=1;
+                        } else {
+                            if (fames < 0) {
+                                fames = 0;
+                            } else {
+                                fames +=1;
+                            }
+                        }
+                    }
+                }
+                getHistory(x, points, fames)
+            }
+            function getHistory (x, y, z) {
+                historyAttempts = 'Intento #' + contHistory + '<br></br>' + historyAttempts;
+                historyPredictions = 'Numero ' + x + '<br></br>' + historyPredictions;
+                historyPoints = 'Puntos ' + y + '<br></br>' + historyPoints;
+                historyFames = 'Famas ' + z + '<br></br>' + historyFames;
+                document.getElementById('attempt'.toString()).innerHTML = historyAttempts;
+                document.getElementById('prediction'.toString()).innerHTML = historyPredictions;
+                document.getElementById('point'.toString()).innerHTML = historyPoints;
+                document.getElementById('fame'.toString()).innerHTML = historyFames;
+            }
+        </script>
+    </head>
+    <body>
+        <h1 class="title">POINTS & FAMES</h1>
+        <h2 class="subTitle sub0">Adivina el numero de 4 digitos</h2>
+        <h2 class="numberSelect" id="numberUnlock">****</h2>
+        <div class="blockInput">
+            <form name="form" action="" method="get" onKeyPress="if(event.keyCode == 13) event.returnValue = false;"></form>
+                <h4 class="subTitle sub1">Escribe tu prediccion</h4>
+                <input class="inputUser" type="text" name="number" required minlength="4" maxlength="4" size="20"/>
+            </form>
+            <button class="inputButton" onclick="getNumberUser()">Verificar</button>
+            <br></br>
+            <a class="reset" href="javascript:document.location.reload();">Volver a jugar</a>
+            <br></br>
+        </div>
+        <h2 class="subTitle sub2">Historial</h2>
+        <div class="history" id="scrollHistory">
+            <h4 class="optionHistory" id="attempt"></h4>
+            <h4 class="optionHistory" id="prediction"></h4>
+            <h4 class="optionHistory" id="point"></h4>
+            <h4 class="optionHistory" id="fame"></h4>
+        </div>
+  </body>
+</html>
